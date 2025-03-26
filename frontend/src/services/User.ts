@@ -6,25 +6,29 @@ export interface UserRequest {
     password: string;
 }
 
-export interface LoginRequest {
-    username: string;
+export interface AuthRequest {
+    login: string;
     password: string;
 }
 
-const CURRENT_URL = `${BASE_URL}/UsersKanban`;
+// Убедимся, что нет лишних слэшей
+const CURRENT_URL = `${BASE_URL}/UsersKanban`.replace(/\/+$/, '');
 
 // Функция для авторизации
-export const login = async (username: string, password: string) => {
+export const login = async (login: string, password: string) => {
+    const url = `${CURRENT_URL}/authenticate`; // Формируем URL явно
+    console.log('Sending request to:', url); // Логируем URL для отладки
     try {
-        const response = await fetch(`${CURRENT_URL}`, {
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password } as LoginRequest),
+            body: JSON.stringify({ login, password } as AuthRequest),
         });
         if (!response.ok) {
-            throw new Error(`Login failed: ${response.status}`);
+            const errorBody = await response.text();
+            throw new Error(`Login failed: ${response.status}, Body: ${errorBody}`);
         }
         return await response.json();
     } catch (error) {
