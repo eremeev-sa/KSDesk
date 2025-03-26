@@ -40,12 +40,22 @@ builder.Services.AddScoped<IBoardsKanbanRepository, BoardKanbanRepository>();
 builder.Services.AddScoped<IColumnsKanbanRepository, ColumnKanbanRepository>();
 builder.Services.AddScoped<ITasksKanbanRepository, TaskKanbanRepository>();
 builder.Services.AddScoped<IUsersKanbanRepository, UserRepository>();
-builder.Services.AddScoped<ISubtasksKanbanRepository, SubtaskKanbanRepository>();
+builder.Services.AddScoped<ISubtasksKanbanRepository, SubtaskKanbanRepository();
 
 // Добавляем CORS
 builder.Services.AddCors(options =>
 {
     var allowedOrigins = builder.Configuration.GetValue<string>("ALLOWED_ORIGINS")?.Split(",");
+    // Логируем, чтобы проверить, что переменная подтягивается
+    if (allowedOrigins != null)
+    {
+        Serilog.Log.Information("Allowed Origins: {Origins}", string.Join(", ", allowedOrigins));
+    }
+    else
+    {
+        Serilog.Log.Warning("ALLOWED_ORIGINS is not set, using default origins.");
+    }
+
     options.AddPolicy("AllowFrontend", builder =>
     {
         if (allowedOrigins != null && allowedOrigins.Length > 0)
@@ -58,7 +68,7 @@ builder.Services.AddCors(options =>
         else
         {
             builder
-                .WithOrigins("http://localhost:3000") // Значение по умолчанию
+                .WithOrigins("http://localhost:3000")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         }
