@@ -60,10 +60,11 @@ var app = builder.Build();
 app.Use(async (context, next) =>
 {
     Serilog.Log.Information("Request received: {Method} {Path} from {Origin}", context.Request.Method, context.Request.Path, context.Request.Headers["Origin"]);
+    Serilog.Log.Information("Request headers: {Headers}", context.Request.Headers); // Логируем заголовки
     if (context.Request.Method == "OPTIONS")
     {
         Serilog.Log.Information("Handling OPTIONS request for {Path} from {Origin}", context.Request.Path, context.Request.Headers["Origin"]);
-        context.Response.Headers["Access-Control-Allow-Origin"] = "*";
+        context.Response.Headers["Access-Control-Allow-Origin"] = "https://kanban-frontend-nlj3.onrender.com";
         context.Response.Headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS";
         context.Response.Headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization";
         context.Response.Headers["Access-Control-Max-Age"] = "86400";

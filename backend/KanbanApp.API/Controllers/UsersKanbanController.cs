@@ -56,21 +56,21 @@ namespace KanbanApp.API.Controllers
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] AuthRequest request)
         {
-            _logger.LogInformation("Received POST request to authenticate user with login: {Login}.", request?.Login);
-            if (request == null || string.IsNullOrEmpty(request.Login) || string.IsNullOrEmpty(request.Password))
+            Console.WriteLine($"Received request: {System.Text.Json.JsonSerializer.Serialize(request)}");
+
+            if (request == null || string.IsNullOrEmpty(request.login) || string.IsNullOrEmpty(request.password))
             {
-                _logger.LogWarning("Authentication failed: Login or password is empty.");
+                Console.WriteLine("Bad request: Login and password are required.");
                 return BadRequest("Login and password are required.");
             }
 
-            var user = await _usersService.Authenticate(request.Login, request.Password);
+            var user = await _usersService.Authenticate(request.login, request.password);
             if (user == null)
             {
-                _logger.LogWarning("Authentication failed: Invalid login or password for login: {Login}.", request.Login);
+                Console.WriteLine("Unauthorized: Invalid login or password.");
                 return Unauthorized("Invalid login or password.");
             }
 
-            _logger.LogInformation("Successfully authenticated user with ID: {UserId}.", user.Id);
             return Ok(user.Id);
         }
 
