@@ -45,34 +45,12 @@ builder.Services.AddScoped<ISubtasksKanbanRepository, SubtaskKanbanRepository>()
 // Добавляем CORS
 builder.Services.AddCors(options =>
 {
-    var allowedOrigins = builder.Configuration.GetValue<string>("ALLOWED_ORIGINS")?.Split(",");
-    if (allowedOrigins != null)
+    options.AddPolicy("AllowAll", builder =>
     {
-        Serilog.Log.Information("Allowed Origins: {Origins}", string.Join(", ", allowedOrigins));
-    }
-    else
-    {
-        Serilog.Log.Warning("ALLOWED_ORIGINS is not set, using default origins.");
-    }
-
-    options.AddPolicy("AllowFrontend", builder =>
-    {
-        if (allowedOrigins != null && allowedOrigins.Length > 0)
-        {
-            builder
-                .WithOrigins(allowedOrigins)
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials();
-        }
-        else
-        {
-            builder
-                .WithOrigins("http://localhost:3000")
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials();
-        }
+        builder
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
     });
 });
 
@@ -81,13 +59,14 @@ var app = builder.Build();
 // Добавляем middleware для обработки OPTIONS-запросов и логирования
 app.Use(async (context, next) =>
 {
+    Serilog.Log.Information("Request received: {Method} {Path} from {Origin}", context.Request.Method, context.Request.Path, context.Request.Headers["Origin"]);
     if (context.Request.Method == "OPTIONS")
     {
         Serilog.Log.Information("Handling OPTIONS request for {Path} from {Origin}", context.Request.Path, context.Request.Headers["Origin"]);
-        context.Response.Headers.Add("Access-Control-Allow-Origin", context.Request.Headers["Origin"]);
-        context.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization");
-        context.Response.Headers.Add("Access-Control-Max-Age", "86400");
+        context.Response.Headers["Access-Control-Allow-Origin"] = "*";
+        context.Response.Headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS";
+        context.Response.Headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization";
+        context.Response.Headers["Access-Control-Max-Age"] = "86400";
         context.Response.StatusCode = 204;
         return;
     }
@@ -135,7 +114,7 @@ app.UseExceptionHandler(errorApp =>
 });
 
 // Настраиваем CORS (ДО UseAuthorization)
-app.UseCors("AllowFrontend");
+app.UseCors("AllowAll");
 
 // Включаем Swagger
 app.UseSwagger();
