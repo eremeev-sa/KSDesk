@@ -15,5 +15,8 @@ namespace KanbanApp.Core.Abstractions.IUsers
 
         // Метод для получения всех пользователей
         Task<List<UserKanban>> GetAllUsers();
+
+        // Метод для авторизации пользователя
+        Task<UserKanban?> Authenticate(string login, string password); // Новый метод
     }
 }
