@@ -42,6 +42,23 @@ builder.Services.AddScoped<ITasksKanbanRepository, TaskKanbanRepository>();
 builder.Services.AddScoped<IUsersKanbanRepository, UserRepository>();
 builder.Services.AddScoped<ISubtasksKanbanRepository, SubtaskKanbanRepository>();
 
+// Добавляем CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", builder =>
+    {
+        builder
+            .WithOrigins(
+                "http://localhost:3000",
+                "https://kanban-frontend.onrender.com",
+                "https://kanban-frontend-5fiz.onrender.com",
+                "https://kanban-frontend-nlj3.onrender.com"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Применение миграций при запуске
@@ -56,7 +73,7 @@ using (var scope = app.Services.CreateScope())
     catch (Exception ex)
     {
         app.Logger.LogError(ex, "An error occurred while applying database migrations.");
-        throw; // Если миграции не удалось применить, приложение не должно запускаться
+        throw;
     }
 }
 
@@ -72,24 +89,20 @@ app.UseExceptionHandler(errorApp =>
         if (error != null)
         {
             var ex = error.Error;
-            await context.Response.WriteAsync(new
+            var errorResponse = new
             {
                 StatusCode = context.Response.StatusCode,
                 Message = "Internal Server Error",
                 Details = ex.Message,
                 StackTrace = ex.StackTrace
-            }.ToString());
+            };
+            await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(errorResponse));
         }
     });
 });
 
 // Настраиваем CORS
-app.UseCors(x =>
-{
-    x.WithHeaders().AllowAnyHeader();
-    x.WithOrigins("http://localhost:3000", "https://kanban-frontend.onrender.com", "https://kanban-frontend-5fiz.onrender.com", "https://kanban-frontend-nlj3.onrender.com");
-    x.WithMethods().AllowAnyMethod();
-});
+app.UseCors("AllowFrontend");
 
 // Включаем Swagger
 app.UseSwagger();
@@ -99,10 +112,15 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = "swagger";
 });
 
-app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Добавляем эндпоинт для корневого пути
+app.MapGet("/", () => "KanbanApp API is running!");
+
+// Настраиваем порт
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+app.Urls.Add($"http://0.0.0.0:{port}");
 
 app.Run();
