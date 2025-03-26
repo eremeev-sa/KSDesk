@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanApp.Core", "KanbanApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanApp.DataAccess", "KanbanApp.DataAccess\KanbanApp.DataAccess.csproj", "{AAD244A9-81A0-4ECA-9437-18EE8541B315}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanApp.Application", "KannbanApp.Application\KanbanApp.Application.csproj", "{3C04C731-DFB9-4BB1-B523-58B1768C781A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanApp.Application", "KanbanApp.Application\KanbanApp.Application.csproj", "{3C04C731-DFB9-4BB1-B523-58B1768C781A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
