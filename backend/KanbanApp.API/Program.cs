@@ -44,7 +44,7 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "KanbanApp API V1");
-    c.RoutePrefix = string.Empty; // Делает Swagger доступным по корневому URL (http://localhost:5000/)
+    c.RoutePrefix = "swagger"; // Теперь Swagger UI будет по /swagger
 });
 
 app.UseHttpsRedirection();
