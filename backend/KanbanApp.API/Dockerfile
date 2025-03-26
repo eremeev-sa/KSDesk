@@ -1,17 +1,25 @@
-﻿# Используем официальный образ .NET для сборки
+﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+EXPOSE 80
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+# Копируем все .csproj файлы из всех проектов
+COPY KanbanApp.Core/KanbanApp.Core.csproj KanbanApp.Core/
+COPY KanbanApp.DataAccess/KanbanApp.DataAccess.csproj KanbanApp.DataAccess/
+COPY KannbanApp.Application/KanbanApp.Application.csproj KanbanApp.Application/
+COPY KanbanApp.API/KanbanApp.API.csproj KanbanApp.API/
+# Восстанавливаем зависимости
+RUN dotnet restore KanbanApp.API/KanbanApp.API.csproj
+# Копируем остальные файлы
+COPY . .
+WORKDIR /src/KanbanApp.API
+RUN dotnet build "KanbanApp.API.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "KanbanApp.API.csproj" -c Release -o /app/publish
+
+FROM base AS final
 WORKDIR /app
-
-# Копируем csproj и восстанавливаем зависимости
-COPY KanbanApp.API.csproj ./
-RUN dotnet restore KanbanApp.API.csproj
-
-# Копируем остальной код и собираем проект
-COPY . ./
-RUN dotnet publish -c Release -o out
-
-# Используем образ для выполнения
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
-WORKDIR /app
-COPY --from=build /app/out ./
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "KanbanApp.API.dll"]
