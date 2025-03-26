@@ -17,10 +17,10 @@ RUN dotnet restore KanbanApp.API/KanbanApp.API.csproj
 # Копируем остальные файлы
 COPY . .
 WORKDIR /src/KanbanApp.API
-RUN dotnet build "KanbanApp.API.csproj" -c Release -o /app/build
+RUN dotnet build KanbanApp.API.csproj -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "KanbanApp.API.csproj" -c Release -o /app/publish
+RUN dotnet publish KanbanApp.API.csproj -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
