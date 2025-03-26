@@ -45,17 +45,23 @@ builder.Services.AddScoped<ISubtasksKanbanRepository, SubtaskKanbanRepository>()
 // Добавляем CORS
 builder.Services.AddCors(options =>
 {
+    var allowedOrigins = builder.Configuration.GetValue<string>("ALLOWED_ORIGINS")?.Split(",");
     options.AddPolicy("AllowFrontend", builder =>
     {
-        builder
-            .WithOrigins(
-                "http://localhost:3000",
-                "https://kanban-frontend.onrender.com",
-                "https://kanban-frontend-5fiz.onrender.com",
-                "https://kanban-frontend-nlj3.onrender.com"
-            )
-            .AllowAnyHeader()
-            .AllowAnyMethod();
+        if (allowedOrigins != null && allowedOrigins.Length > 0)
+        {
+            builder
+                .WithOrigins(allowedOrigins)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        }
+        else
+        {
+            builder
+                .WithOrigins("http://localhost:3000") // Значение по умолчанию
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        }
     });
 });
 
@@ -101,7 +107,7 @@ app.UseExceptionHandler(errorApp =>
     });
 });
 
-// Настраиваем CORS
+// Настраиваем CORS (ДО UseAuthorization)
 app.UseCors("AllowFrontend");
 
 // Включаем Swagger
