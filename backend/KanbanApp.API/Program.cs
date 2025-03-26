@@ -40,7 +40,7 @@ builder.Services.AddScoped<IBoardsKanbanRepository, BoardKanbanRepository>();
 builder.Services.AddScoped<IColumnsKanbanRepository, ColumnKanbanRepository>();
 builder.Services.AddScoped<ITasksKanbanRepository, TaskKanbanRepository>();
 builder.Services.AddScoped<IUsersKanbanRepository, UserRepository>();
-builder.Services.AddScoped<ISubtasksKanbanRepository, SubtaskKanbanRepository();
+builder.Services.AddScoped<ISubtasksKanbanRepository, SubtaskKanbanRepository>();
 
 // Добавляем CORS
 builder.Services.AddCors(options =>
