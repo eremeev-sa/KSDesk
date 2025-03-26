@@ -87,7 +87,7 @@ app.UseExceptionHandler(errorApp =>
 app.UseCors(x =>
 {
     x.WithHeaders().AllowAnyHeader();
-    x.WithOrigins("http://localhost:3000", "https://kanban-frontend.onrender.com"); // Добавляем URL фронтенда на Render
+    x.WithOrigins("http://localhost:3000", "https://kanban-frontend.onrender.com", "https://kanban-frontend-5fiz.onrender.com", "https://kanban-frontend-nlj3.onrender.com");
     x.WithMethods().AllowAnyMethod();
 });
 
