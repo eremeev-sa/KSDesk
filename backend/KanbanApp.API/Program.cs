@@ -24,10 +24,7 @@ builder.Services.AddSwaggerGen();
 
 // Регистрация DbContext
 builder.Services.AddDbContext<KanbanAppDbContext>(
-    options =>
-    {
-        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-    });
+    options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Регистрация сервисов и репозиториев
 builder.Services.AddScoped<IBoardsKanbanService, BoardsKanbanService>();
@@ -55,24 +52,6 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-
-// Добавляем middleware для обработки OPTIONS-запросов и логирования
-app.Use(async (context, next) =>
-{
-    Serilog.Log.Information("Request received: {Method} {Path} from {Origin}", context.Request.Method, context.Request.Path, context.Request.Headers["Origin"]);
-    Serilog.Log.Information("Request headers: {Headers}", context.Request.Headers); // Логируем заголовки
-    if (context.Request.Method == "OPTIONS")
-    {
-        Serilog.Log.Information("Handling OPTIONS request for {Path} from {Origin}", context.Request.Path, context.Request.Headers["Origin"]);
-        context.Response.Headers["Access-Control-Allow-Origin"] = "https://kanban-frontend-nlj3.onrender.com";
-        context.Response.Headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS";
-        context.Response.Headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization";
-        context.Response.Headers["Access-Control-Max-Age"] = "86400";
-        context.Response.StatusCode = 204;
-        return;
-    }
-    await next();
-});
 
 // Применение миграций при запуске
 using (var scope = app.Services.CreateScope())
@@ -114,19 +93,15 @@ app.UseExceptionHandler(errorApp =>
     });
 });
 
-// Настраиваем CORS (ДО UseAuthorization)
-app.UseCors("AllowAll");
-
-// Включаем Swagger
+// Настраиваем middleware
+app.UseCors("AllowAll"); // Сначала CORS
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "KanbanApp API V1");
     c.RoutePrefix = "swagger";
 });
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 // Добавляем эндпоинт для корневого пути
