@@ -1,0 +1,16 @@
+﻿version: "3.9"
+services:
+  postgres:
+    container_name: kanban-postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: "kanban_db"
+      POSTGRES_USER: "sergey"
+      POSTGRES_PASSWORD: "123"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5431:5432"
+
+volumes:
+  postgres-data:

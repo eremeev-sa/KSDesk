@@ -1,0 +1,513 @@
+:root {
+    /* Определение переменной для ширины боковой панели */
+    --sidebar-size: 250px;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    height: 100%;
+    margin: 0;
+    max-height: 100vh;
+    overflow-y: hidden;
+}
+
+.center {
+    /* Центрирование текста */
+    text-align: center;
+    margin: 0 auto;
+}
+
+.custom-color {
+    background: #f4f5f6;
+}
+
+.bg-white {
+    background: #ffffff;
+}
+
+.h-100 {
+    min-height: 100vh;
+}
+
+.h-100p {
+    min-height: 100%;
+}
+
+.w-100p {
+    min-width: 100%;
+    padding: 0;
+    margin: 0;
+    left: 0;
+}
+
+
+/* Кнопки */
+
+.btn-exit {
+    /* Стиль для кнопки выхода */
+    color: #333333;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-accept {
+    /* Стиль для кнопки принятия */
+    color: #cccccc;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.btn-cancel {
+    /* Стиль для кнопки отмены */
+    color: #333333;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+}
+
+.btn-add {
+    /* Стиль для кнопки добавления */
+    font-size: 25px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 200;
+    color: #a0a4af;
+}
+
+.btn-delete {
+    /* Стиль для кнопки удаления */
+    color: #333333;
+    font-weight: bold;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-exit:hover,
+.bth-add:hover,
+.btn-accept:hover,
+.btn-delete:hover {
+    /* Эффект при наведении на кнопки */
+    color: #ffffff;
+    background-color: #000000;
+}
+
+.btn-edit {
+    /* Стиль для кнопки редактирования */
+    font-family: 'Inter', sans-serif;
+    color: #777777;
+    font-style: italic;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    background: none;
+    transition: color 0.3s, background-color 0.3s;
+    outline: none;
+}
+
+.btn-edit:hover {
+    /* Эффект при наведении на кнопку редактирования */
+    cursor: pointer;
+    border: none;
+}
+
+.button-container {
+    /* Контейнер для кнопок */
+    display: flex;
+    right: 0;
+}
+
+.bth-add-subtask,
+.bth-add-task {
+    /* Выравнивание кнопок добавления задач и подзадач */
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
+.custom-button {
+    /* Кастомизация кнопок с курсором "pointer" */
+    cursor: pointer;
+}
+
+.text-on-bth {
+    /* Стиль текста на кнопке */
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+
+/* Боковая панель */
+
+.sidebar {
+    /* Стили боковой панели */
+    margin: auto;
+    min-width: var(--sidebar-size);
+    max-width: var(--sidebar-size);
+    max-height: 100%;
+    height: 100%;
+    flex: 0 0 auto;
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
+    padding: 1rem;
+    background: #f4f5f6;
+    margin-right: 0;
+}
+
+.sidebar-header-ico {
+    /* Иконка в шапке боковой панели */
+    width: 25px;
+    height: 25px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3c?xml version='1.0' encoding='UTF-8'?%3e%3csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24px' height='23px' viewBox='0 0 23 23' version='1.1'%3e%3cg id='surface1'%3e%3cpath style=' stroke:none;fill-rule:evenodd;fill:rgb(13.333334%25,13.725491%25,14.901961%25);fill-opacity:1;' d='M 4.859375 4.535156 C 4.734375 9.285156 4.695312 14.054688 4.734375 18.847656 C 9.226562 18.890625 13.695312 18.847656 18.140625 18.71875 C 18.121094 17.609375 18.140625 16.503906 18.203125 15.398438 C 19.128906 14.476562 20.011719 13.519531 20.847656 12.523438 C 21.257812 12.230469 21.605469 12.292969 21.894531 12.714844 C 21.976562 15.566406 21.976562 18.421875 21.894531 21.273438 C 21.605469 22.066406 21.089844 22.617188 20.355469 22.9375 C 14.410156 22.9375 8.464844 22.9375 2.519531 22.9375 C 1.859375 22.566406 1.386719 22.011719 1.105469 21.273438 C 1.023438 14.84375 1.023438 8.410156 1.105469 1.980469 C 1.425781 1.265625 1.9375 0.777344 2.644531 0.511719 C 7.359375 0.425781 12.074219 0.425781 16.789062 0.511719 C 17.300781 0.742188 17.402344 1.105469 17.097656 1.597656 C 16.171875 2.601562 15.207031 3.558594 14.207031 4.472656 C 11.089844 4.535156 7.972656 4.558594 4.859375 4.535156 Z M 4.859375 4.535156 '/%3e%3cpath style=' stroke:none;fill-rule:evenodd;fill:rgb(13.333334%25,13.725491%25,14.901961%25);fill-opacity:1;' d='M 19.988281 3.257812 C 21.480469 3.191406 22.339844 3.917969 22.570312 5.429688 C 22.539062 5.933594 22.394531 6.402344 22.140625 6.835938 C 19.25 9.925781 16.359375 13.011719 13.46875 16.101562 C 12.703125 16.605469 11.925781 16.644531 11.132812 16.226562 C 9.636719 14.71875 8.183594 13.164062 6.765625 11.5625 C 6.1875 9.78125 6.761719 8.675781 8.488281 8.242188 C 8.894531 8.277344 9.285156 8.386719 9.65625 8.5625 C 10.496094 9.433594 11.335938 10.308594 12.175781 11.179688 C 14.539062 8.769531 16.855469 6.320312 19.125 3.832031 C 19.421875 3.636719 19.707031 3.445312 19.988281 3.257812 Z M 19.988281 3.257812 '/%3e%3c/g%3e%3c/svg%3e ");
+}
+
+.sidebar-header-text {
+    /* Текст в шапке боковой панели */
+    gap: 14px;
+    margin: 20px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-height: 0;
+    font-family: "IBM Plex Sans";
+    font-weight: bolder;
+    text-shadow: 0.4px 0px 0px black;
+    font-size: 22px;
+}
+
+.sidebar-title {
+    /* Стили для заголовка боковой панели */
+    margin-top: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-height: 0;
+}
+
+.user {
+    /* Стиль блока пользователя */
+    flex: 0 0 auto;
+    margin-top: auto;
+}
+
+.user-info {
+    /* Стили для информации о пользователе */
+    margin: 10px;
+    bottom: 0;
+    position: absolute;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    gap: 10px;
+}
+
+.user-name {
+    /* Стили для имени пользователя */
+    margin-top: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+}
+
+.board-info {
+    /* Стили для информации о доске */
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    color: #8b909c;
+    font-weight: 300;
+}
+
+.boards-list {
+    /* Стили для списка досок */
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    top: 0;
+    margin-top: 20px;
+    height: 70vh;
+}
+
+.boards {
+    /* Стили для контейнера досок */
+    height: calc(100vh - 20px - 25px - 22px - 50px);
+    margin-top: 25px;
+    overflow-y: auto;
+}
+
+.kanban-boards {
+    /* Стили для области канбан-досок */
+    padding-left: 10px;
+    border: 0;
+    border-radius: 10px;
+}
+
+.new-board {
+    /* Стили для вывода формы добавления новой доски */
+    top: 0;
+    margin: 0;
+}
+
+
+/* Колонки */
+
+.kanban-columns-container {
+    /* Стили для контейнера колонок канбан-доски */
+    margin-left: var(--sidebar-size);
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    white-space: nowrap;
+    min-height: 97vh;
+}
+
+.kanban-column {
+    /* Стили для отдельных колонок канбан-доски */
+    min-width: 330px;
+    max-width: 330px;
+    width: 330px;
+    flex: 0 0 auto;
+    background: #f4f5f6;
+    border: 0;
+    border-radius: 15px;
+}
+
+.form-control.board {
+    /* Стили для поля ввода доски */
+    font-size: 12px;
+    padding: 4px;
+}
+
+.form-control.column {
+    /* Стили для поля ввода колонки */
+    font-size: 16px;
+    padding: 4px;
+    margin-left: 8px;
+    margin-top: 4px;
+}
+
+.form-control.card {
+    /* Стили для поля ввода карточки */
+    min-width: 320px;
+    max-width: 320px;
+    width: 320px;
+}
+
+.new-column {
+    /* Стили для вывода формы добавления новой колонки */
+    min-width: 320px;
+    max-width: 320px;
+    width: 320px;
+}
+
+.noselect {
+    /* Убираем возможность выделения текста */
+    cursor: text;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.kanban-column .card-body {
+    /* Стили для содержимого карточки */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-card-header {
+    /* Стили для заголовка карточки */
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+
+.card {
+    /* Стили для карточек */
+    border: 0;
+    background: #f4f5f6;
+    border-radius: 20px;
+}
+
+.overflow-y-on {
+    overflow-y: auto;
+    max-height: 80vh;
+    overflow-x: hidden;
+}
+
+.row.task {
+    /* Стили для задач в ряду */
+    padding: 0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.subtasks {
+    padding: 0;
+}
+
+.input {
+    width: 100%;
+}
+
+.accordion-button:not(.collapsed) {
+    /* Изменение фона для активной кнопки аккордеона */
+    background-color: #ffffff;
+    outline: none;
+    /* Убираем контур вокруг кнопки */
+}
+
+.accordion-button:focus {
+    /* Стиль для кнопки аккордеона при фокусе */
+    background-color: #ffffff;
+    border: none;
+    outline: none;
+    /* Убираем контур вокруг кнопки */
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0.2);
+}
+
+.accordion-item {
+    /* Стили для элементов аккордеона */
+    background-color: #f4f5f6;
+    /* Убираем границу */
+    border: none;
+    /* Убираем контур */
+    outline: none;
+}
+
+.list-group-item {
+    /* Выравнивание элементов списка по центру */
+    align-items: center;
+}
+
+.text-container {
+    /* Стиль для контейнера текста */
+    flex-grow: 1;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.textarea {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+
+.selected {
+    /* Стили для выбранного элемента */
+    background: #eaeced;
+}
+
+.drag-handle {
+    /* Стиль для области перетаскивания (общий для элементов) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    cursor: grab;
+    font-size: 18px;
+    padding: 20px;
+
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+    supported by Chrome, Edge, Opera and Firefox */
+}
+
+.drag-handle-task {
+    /* Стиль для области перетаскивания (специально для задач) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 24px;
+    cursor: grab;
+    font-size: 18px;
+    padding: 20px;
+    background-color: #ffffff;
+
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+    supported by Chrome, Edge, Opera and Firefox */
+}
+
+.accordion-header {
+    /* Стили для шапки аккордеона */
+    display: flex;
+    align-items: center;
+}
+
+.priority-low {
+    /* Стили для низкого приоритета */
+    color: green;
+    /* Зеленый цвет */
+}
+
+.priority-medium {
+    /* Стили для среднего приоритета */
+    color: blue;
+    /* Синий цвет */
+}
+
+.priority-high {
+    /* Стили для высокого приоритета */
+    color: red;
+    /* Красный цвет */
+}
+
+.description-style {
+    /* Стили для описания задачи */
+    color: gray;
+    /* Серый цвет текста */
+    margin-bottom: 5px;
+    /* Нижний отступ */
+}
+
+.user-style {
+    /* Стили для имени пользователя */
+    color: deepskyblue;
+    /* Голубой цвет */
+}

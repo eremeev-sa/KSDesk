@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanApp.API", "KanbanApp.API\KanbanApp.API.csproj", "{4DB68292-7CAF-41B3-BCB3-D0AFCD1E7346}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanApp.Core", "KanbanApp.Core\KanbanApp.Core.csproj", "{A96CA621-E29F-47E8-8505-DE3E50FCA663}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanApp.DataAccess", "KanbanApp.DataAccess\KanbanApp.DataAccess.csproj", "{AAD244A9-81A0-4ECA-9437-18EE8541B315}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanApp.Application", "KannbanApp.Application\KanbanApp.Application.csproj", "{3C04C731-DFB9-4BB1-B523-58B1768C781A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4DB68292-7CAF-41B3-BCB3-D0AFCD1E7346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DB68292-7CAF-41B3-BCB3-D0AFCD1E7346}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DB68292-7CAF-41B3-BCB3-D0AFCD1E7346}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DB68292-7CAF-41B3-BCB3-D0AFCD1E7346}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A96CA621-E29F-47E8-8505-DE3E50FCA663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A96CA621-E29F-47E8-8505-DE3E50FCA663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A96CA621-E29F-47E8-8505-DE3E50FCA663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A96CA621-E29F-47E8-8505-DE3E50FCA663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAD244A9-81A0-4ECA-9437-18EE8541B315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAD244A9-81A0-4ECA-9437-18EE8541B315}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAD244A9-81A0-4ECA-9437-18EE8541B315}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAD244A9-81A0-4ECA-9437-18EE8541B315}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C04C731-DFB9-4BB1-B523-58B1768C781A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C04C731-DFB9-4BB1-B523-58B1768C781A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C04C731-DFB9-4BB1-B523-58B1768C781A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C04C731-DFB9-4BB1-B523-58B1768C781A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2B79B1E2-0C98-46C1-AA3A-35735C4B1897}
+	EndGlobalSection
+EndGlobal
