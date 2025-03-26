@@ -21,6 +21,7 @@
     <ProjectReference Include="..\KanbanApp.Core\KanbanApp.Core.csproj" />
     <ProjectReference Include="..\KanbanApp.DataAccess\KanbanApp.DataAccess.csproj" />
 	<ProjectReference Include="..\KanbanApp.Application\KanbanApp.Application.csproj" />
+	<ProjectReference Include="..\KannbanApp.Application\KanbanApp.Application.csproj" />
   </ItemGroup>
 
 </Project>
