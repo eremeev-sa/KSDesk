@@ -46,7 +46,6 @@ builder.Services.AddScoped<ISubtasksKanbanRepository, SubtaskKanbanRepository>()
 builder.Services.AddCors(options =>
 {
     var allowedOrigins = builder.Configuration.GetValue<string>("ALLOWED_ORIGINS")?.Split(",");
-    // Логируем, чтобы проверить, что переменная подтягивается
     if (allowedOrigins != null)
     {
         Serilog.Log.Information("Allowed Origins: {Origins}", string.Join(", ", allowedOrigins));
@@ -63,19 +62,37 @@ builder.Services.AddCors(options =>
             builder
                 .WithOrigins(allowedOrigins)
                 .AllowAnyHeader()
-                .AllowAnyMethod();
+                .AllowAnyMethod()
+                .AllowCredentials();
         }
         else
         {
             builder
                 .WithOrigins("http://localhost:3000")
                 .AllowAnyHeader()
-                .AllowAnyMethod();
+                .AllowAnyMethod()
+                .AllowCredentials();
         }
     });
 });
 
 var app = builder.Build();
+
+// Добавляем middleware для обработки OPTIONS-запросов и логирования
+app.Use(async (context, next) =>
+{
+    if (context.Request.Method == "OPTIONS")
+    {
+        Serilog.Log.Information("Handling OPTIONS request for {Path} from {Origin}", context.Request.Path, context.Request.Headers["Origin"]);
+        context.Response.Headers.Add("Access-Control-Allow-Origin", context.Request.Headers["Origin"]);
+        context.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        context.Response.Headers.Add("Access-Control-Max-Age", "86400");
+        context.Response.StatusCode = 204;
+        return;
+    }
+    await next();
+});
 
 // Применение миграций при запуске
 using (var scope = app.Services.CreateScope())
