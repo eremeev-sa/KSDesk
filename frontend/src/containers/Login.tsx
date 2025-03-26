@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { login, UserRequest } from '../services/User';
+import { login } from '../services/User';
 import { useUser } from '../context/UserContext';
 
 type LoginProps = {
@@ -8,15 +8,22 @@ type LoginProps = {
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
     const { setCurrentUser } = useUser();
-    const [username, setUsername] = useState('');
+    const [userLogin, setUserLogin] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
 
     const handleLogin = async () => {
         try {
             setError(null);
-            const user = await login(username, password);
-            setCurrentUser(user.name);
+
+            // Проверяем, что поля не пустые
+            if (!userLogin || !password) {
+                setError('Пожалуйста, заполните логин и пароль');
+                return;
+            }
+
+            const userId = await login(userLogin, password);
+            setCurrentUser(userId);
             onLogin();
         } catch (error) {
             console.error('Login failed:', error);
@@ -31,15 +38,15 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 {error && <p className="text-danger text-center">{error}</p>}
                 <form>
                     <div className="mb-3">
-                        <label htmlFor="username" className="form-label">
+                        <label htmlFor="login" className="form-label">
                             Логин
                         </label>
                         <input
                             type="text"
                             className="form-control"
-                            id="username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            id="login"
+                            value={userLogin}
+                            onChange={(e) => setUserLogin(e.target.value)}
                         />
                     </div>
                     <div className="mb-3">
