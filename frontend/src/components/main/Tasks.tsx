@@ -12,7 +12,7 @@ type TasksProps = {
         description: string;
         priority: string;
         columnId: string;
-        assigneeId: string;
+        assignedId: string;
     }[];
     columnId: string;
 

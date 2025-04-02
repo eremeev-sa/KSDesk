@@ -4,7 +4,7 @@ export type TaskType = {
     description: string;
     priority: string;
     columnId: string;
-    assigneeId: string;
+    assignedId: string;
 };
 
 export type UserType = {

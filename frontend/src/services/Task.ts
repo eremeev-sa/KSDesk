@@ -11,7 +11,7 @@ export interface TaskUpdateRequest {
     name: string;
     description: string;
     priority: string;
-    assigneeId: string;
+    assignedId: string;
 };
 
 const CURRENT_URL = `${BASE_URL}/TasksKanban`;

@@ -18,7 +18,7 @@ type TaskProps = {
         description: string;
         priority: string;
         columnId: string;
-        assigneeId: string;
+        assignedId: string;
     };
     index: number;
     onDelete: (id: string) => void;
@@ -67,7 +67,7 @@ const Header = styled.div<HeaderProps>`
 const Task: React.FC<TaskProps> = ({ task, index, onDelete, handleTaskUpdate, usersData }) => {
     const [isEditing, setIsEditing] = useState(false); // Состояние для редактирования
     const [tempName, setTempName] = useState(task.name); // Временное название задачи
-    const [tempUser, setTempUser] = useState(task.assigneeId); // Временный пользователь
+    const [tempUser, setTempUser] = useState(task.assignedId); // Временный пользователь
     const [tempDescription, setDescription] = useState(task.description); // Временное описание задачи
     const [tempPriority, setPriority] = useState(task.priority); // Временный приоритет
     const [subtaskData, setSubtaskData] = useState<SubtaskType[]>([]); // Данные подзадач
@@ -100,7 +100,7 @@ const Task: React.FC<TaskProps> = ({ task, index, onDelete, handleTaskUpdate, us
 
     // Функция для сохранения изменений
     const handleSaveClick = () => {
-        const taskRequest = { name: tempName, description: tempDescription, priority: tempPriority, assigneeId: tempUser };
+        const taskRequest = { name: tempName, description: tempDescription, priority: tempPriority, assignedId: tempUser };
         handleTaskUpdate(task.id, taskRequest);
         setIsEditing(false);
     };
@@ -225,7 +225,7 @@ const Task: React.FC<TaskProps> = ({ task, index, onDelete, handleTaskUpdate, us
                                                         {task.priority}
                                                     </div>
                                                     <div className='user-style'>
-                                                        <span>{usersData.find((user) => user.id === task.assigneeId)?.name || "Не назначен"}</span>
+                                                        <span>{usersData.find((user) => user.id === task.assignedId)?.name || "Не назначен"}</span>
                                                     </div>
                                                 </span>
                                             </div>
