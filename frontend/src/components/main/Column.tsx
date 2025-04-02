@@ -39,7 +39,7 @@ type ColumnProps = {
         description: string;
         priority: string;
         columnId: string;
-        assigneeId: string;
+        assignedId: string;
     }[];
 
     handleTaskUpdate: (id: string, taskRequest: TaskUpdateRequest) => void; // Обновление задачи
